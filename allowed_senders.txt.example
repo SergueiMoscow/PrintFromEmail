@@ -1,0 +1,7 @@
+# Allowed sender addresses — one per line.
+# Lines starting with # are ignored, as are blank lines.
+# Addresses are case-insensitive.
+#
+# Example:
+alice@example.com
+bob@example.com

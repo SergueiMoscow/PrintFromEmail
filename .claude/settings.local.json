@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /home/sergey/Projects/PrintFromEmail/app /home/sergey/Projects/PrintFromEmail/tests /home/sergey/Projects/PrintFromEmail/data /home/sergey/Projects/PrintFromEmail/printed /home/sergey/Projects/PrintFromEmail/docs/adr /home/sergey/Projects/PrintFromEmail/docs/specs)",
+      "Bash(uv sync *)",
+      "Bash(pip3 install *)",
+      "Bash(python3 -m pip install imap-tools pydantic-settings pytest pytest-mock)",
+      "Bash(find /usr -name \"pip*\" 2>/dev/null | head -10; find /home -name \"pip*\" 2>/dev/null | head -5; ls /usr/local/bin/ 2>/dev/null)",
+      "Read(//usr/**)",
+      "Read(//home/**)",
+      "Read(//usr/local/bin/**)",
+      "Bash(python3 -c \"import sys; sys.path.insert\\(0, '/home/sergey/Projects/PrintFromEmail'\\); import app.parser; print\\('OK'\\)\")"
+    ],
+    "additionalDirectories": [
+      "/home/sergey/Projects/PrintFromEmail"
+    ]
+  }
+}

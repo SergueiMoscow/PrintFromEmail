@@ -1,0 +1,12 @@
+services:
+  mail-print-agent:
+    build: .
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    volumes:
+      - ./data:/data
+      - ./printed:/data/printed
+      # Uncomment if using ALLOWED_SENDERS_FILE:
+      # - ./allowed_senders.txt:/app/allowed_senders.txt:ro
+    network_mode: host

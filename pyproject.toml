@@ -1,0 +1,37 @@
+[project]
+name = "mail-print-agent"
+version = "0.1.0"
+description = "Daemon that polls IMAP mailbox and prints attachments via CUPS"
+requires-python = ">=3.12"
+dependencies = [
+    "imap-tools>=1.7.0",
+    "pydantic-settings>=2.7.0",
+]
+
+[project.scripts]
+mail-print-agent = "app.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.3.0",
+    "pytest-mock>=3.14.0",
+    "ruff>=0.9.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+ignore = ["B008"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
