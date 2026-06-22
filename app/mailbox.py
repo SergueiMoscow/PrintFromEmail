@@ -1,6 +1,6 @@
 import logging
 
-from imap_tools import AND, MailBox, MailBoxUnencrypted, MailMessage
+from imap_tools import AND, H, MailBox, MailBoxUnencrypted, MailMessage
 
 from app.models import Attachment, Message
 
@@ -49,7 +49,7 @@ class ImapMailSource:
 
     def delete(self, message_id: str) -> None:
         with self._connect() as mb:
-            for raw in mb.fetch(AND(header=["Message-ID", message_id]), mark_seen=False):
+            for raw in mb.fetch(AND(header=H("Message-ID", message_id)), mark_seen=False):
                 mb.delete([raw.uid])
                 logger.info("Deleted message %s from mailbox", message_id)
                 return
