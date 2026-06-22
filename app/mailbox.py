@@ -7,10 +7,13 @@ from app.models import Attachment, Message
 logger = logging.getLogger(__name__)
 
 
+_SOCKET_TIMEOUT = 30  # seconds
+
+
 def _make_mailbox(host: str, port: int, ssl: bool) -> MailBox | MailBoxUnencrypted:
     if ssl:
-        return MailBox(host, port=port)
-    return MailBoxUnencrypted(host, port=port)
+        return MailBox(host, port=port, timeout=_SOCKET_TIMEOUT)
+    return MailBoxUnencrypted(host, port=port, timeout=_SOCKET_TIMEOUT)
 
 
 class ImapMailSource:
@@ -46,12 +49,10 @@ class ImapMailSource:
 
     def delete(self, message_id: str) -> None:
         with self._connect() as mb:
-            for raw in mb.fetch(AND(seen=False), mark_seen=False, bulk=True):
-                mid = (raw.headers.get("message-id") or [""])[0].strip()
-                if mid == message_id:
-                    mb.delete([raw.uid])
-                    logger.info("Deleted message %s from mailbox", message_id)
-                    return
+            for raw in mb.fetch(AND(header=["Message-ID", message_id]), mark_seen=False):
+                mb.delete([raw.uid])
+                logger.info("Deleted message %s from mailbox", message_id)
+                return
         logger.warning("Message %s not found for deletion", message_id)
 
     @staticmethod

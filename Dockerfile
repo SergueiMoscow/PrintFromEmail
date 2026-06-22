@@ -6,6 +6,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cups-client \
     cups-filters \
     printer-driver-all \
+    foomatic-db-compressed-ppds \
+    openprinting-ppds \
     libreoffice-core \
     libreoffice-writer \
     libreoffice-calc \
