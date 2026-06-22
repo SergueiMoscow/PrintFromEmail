@@ -2,7 +2,7 @@
 name = "mail-print-agent"
 version = "0.1.0"
 description = "Daemon that polls IMAP mailbox and prints attachments via CUPS"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
     "imap-tools>=1.7.0",
     "pydantic-settings>=2.7.0",
@@ -27,7 +27,7 @@ dev-dependencies = [
 
 [tool.ruff]
 line-length = 100
-target-version = "py312"
+target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM"]

@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Protocol
 
-from app.models import Attachment, Message, PrintOptions, PrintResult
+from app.models import Attachment, Message, PrintOptions, PrintResult, PrintStatus
 
 
 class MailSource(Protocol):
@@ -29,6 +29,10 @@ class Converter(Protocol):
 class StateStore(Protocol):
     def is_processed(self, message_id: str) -> bool:
         """Return True if message was already processed."""
+        ...
+
+    def get_status(self, message_id: str) -> PrintStatus | None:
+        """Return status of a processed message, or None if not found."""
         ...
 
     def record(self, result: PrintResult) -> None:

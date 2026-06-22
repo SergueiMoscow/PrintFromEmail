@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 
-from app.models import PrintResult
+from app.models import PrintResult, PrintStatus
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +41,13 @@ class SqliteStateStore:
                 "SELECT 1 FROM processed WHERE message_id = ?", (message_id,)
             ).fetchone()
         return row is not None
+
+    def get_status(self, message_id: str) -> PrintStatus | None:
+        with self._connect() as conn:
+            row = conn.execute(
+                "SELECT status FROM processed WHERE message_id = ?", (message_id,)
+            ).fetchone()
+        return PrintStatus(row["status"]) if row else None
 
     def record(self, result: PrintResult) -> None:
         processed_at = datetime.now(timezone.utc).isoformat()

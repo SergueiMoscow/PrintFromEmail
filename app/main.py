@@ -187,6 +187,14 @@ class Agent:
 
         if self._state.is_processed(message.message_id):
             logger.debug("Already processed: %s", message.message_id)
+            if (
+                self._settings.delete_from_mailbox
+                and self._state.get_status(message.message_id) == PrintStatus.PRINTED
+            ):
+                try:
+                    self._mail.delete(message.message_id)
+                except Exception as exc:
+                    logger.error("Failed to delete message %s: %s", message.message_id, exc)
             return
 
         logger.info(
